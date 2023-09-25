@@ -63,46 +63,50 @@ else
 }
 }
 
-//for cpp file:
+//Another method
+import java.util.Scanner;
 
-#include<iostream>
-using namespace std;
+public class CRC {
 
-string crc(string rem, string poly, int checkError){
-    if ( !checkError )
-        for(int i = 0; i<poly.size() -1; ++i)
-            rem += "0";
-
-    for(int i = 0; i<rem.size() - poly.size() + 1 ; ++i){
-        if ( rem[i] == '1' ){
-            for(int j = 0; j<poly.size(); ++j){
-                if ( rem[i+j] == poly[j] )
-                    rem[i+j] = '0';
-                else
-                    rem[i+j] = '1';
+    public static String crc(String rem, String poly, int checkError) {
+        if (checkError == 0) {
+            for (int i = 0; i < poly.length() - 1; i++) {
+                rem += "0";
             }
         }
+
+        for (int i = 0; i < rem.length() - poly.length() + 1; i++) {
+            if (rem.charAt(i) == '1') {
+                for (int j = 0; j < poly.length(); j++) {
+                    if (rem.charAt(i + j) == poly.charAt(j)) {
+                        rem = rem.substring(0, i + j) + '0' + rem.substring(i + j + 1);
+                    } else {
+                        rem = rem.substring(0, i + j) + '1' + rem.substring(i + j + 1);
+                    }
+                }
+            }
+        }
+        return rem.substring(rem.length() - poly.length() + 1);
     }
-    return rem.substr(rem.size() - poly.size() + 1); 
-}
 
-int main(){
-    string data, poly;
-    cout << "Enter the data to be transmitted >> ";
-    cin >> data;
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String data, poly;
+        System.out.print("Enter the data to be transmitted >> ");
+        data = scanner.nextLine();
 
-    cout << "Enter the polynomial >> ";
-    cin >> poly;
+        System.out.print("Enter the polynomial >> ");
+        poly = scanner.nextLine();
 
-    cout << "Transmitted data >> " << data + crc(data, poly, 0) << endl;
+        System.out.println("Transmitted data >> " + data + crc(data, poly, 0));
 
-    cout << "Enter the received data >> ";
-    cin >> data;
+        System.out.print("Enter the received data >> ");
+        data = scanner.nextLine();
 
-    if ( stoi(crc(data, poly, 1)) == 0 )
-        cout << "No error in data transmission " << endl;
-    else
-        cout << "Error has occurred in data transmission " << endl;
-
-    return 0;
+        if (Integer.parseInt(crc(data, poly, 1)) == 0) {
+            System.out.println("No error in data transmission");
+        } else {
+            System.out.println("Error has occurred in data transmission");
+        }
+    }
 }
