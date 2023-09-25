@@ -1,46 +1,62 @@
-import java.util.ArrayList;
-import java.util.Collections;
+
+   import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
-public class FrameSorting {
+class Frame {
+    int seqNo;
+    int data;
 
-    // Sorting the Frames
-    public static List<int[]> sortFrame(List<int[]> frame) {
-        Collections.sort(frame, (a, b) -> Integer.compare(a[0], b[0]));
-        return frame;
+    public Frame(int seqNo) {
+        this.seqNo = seqNo;
+    }
+}
+
+public class Main {
+
+    public static void bubbleSort(List<Frame> frames) {
+        int n = frames.size();
+        for (int i = 0; i < n-1; i++) {
+            for (int j = 0; j < n-i-1; j++) {
+                if (frames.get(j).seqNo > frames.get(j+1).seqNo) {
+                    Frame temp = frames.get(j);
+                    frames.set(j, frames.get(j+1));
+                    frames.set(j+1, temp);
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
-        List<int[]> frame = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter the number of Frames >> ");
+        System.out.print("Enter the number of frames: ");
         int n = scanner.nextInt();
 
-        Random random = new Random();
-
+        List<Integer> seqList = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            int seqNum = random.nextInt(10000) + 1;
-            System.out.printf("Enter the data for %dth frame >> ", i + 1);
-            int data = scanner.nextInt();
-
-            frame.add(new int[]{seqNum, data});
+            int x = (int) (Math.random() * (n * 100)) + 1;
+            while (seqList.contains(x)) {
+                x = (int) (Math.random() * (n * 100)) + 1;
+            }
+            seqList.add(x);
         }
 
-        System.out.println("\nBefore Sorting >> ");
-        for (int[] i : frame) {
-            System.out.printf("Seq. Num -> %d, Data -> %d%n", i[0], i[1]);
+        List<Frame> frames = new ArrayList<>();
+        for (int seqNo : seqList) {
+            frames.add(new Frame(seqNo));
         }
 
-        frame = sortFrame(frame);
-
-        System.out.println("\nAfter Sorting >> ");
-        for (int[] i : frame) {
-            System.out.printf("Seq. Num -> %d, Data -> %d%n", i[0], i[1]);
+        for (Frame frame : frames) {
+            System.out.print("Enter data for frame " + frame.seqNo + ": ");
+            frame.data = scanner.nextInt();
         }
 
-        scanner.close();
+        bubbleSort(frames);
+
+        for (Frame frame : frames) {
+            System.out.println("Frame " + frame.seqNo + " : " + frame.data);
+        }
     }
 }
+
+Frame sorting
