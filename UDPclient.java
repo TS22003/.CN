@@ -1,37 +1,20 @@
+import java.io.*;
 import java.net.*;
 
+public class UDPClient{
+  public static void main(String[] args) throws IOException
+  {
+      //Set the port number on which the client must communicate to the server.
+      DatagramSocket ds=new DatagramSocket(2345);
+      String msg;
+      byte[] buf=new byte[100];
+      while(true)
+      {
+          DatagramPacket rdp=new DatagramPacket(buf,buf.length);
+          ds.receive(rdp);
+          msg=new String(rdp.getData(),rdp.getOffset(),rdp.getLength());
 
-
-public class Client
-{
-	public static void main(String[] args)
-	{
-		try
-		{
-			DatagramSocket ds= new DatagramSocket(5010);			//Creates Socket
-			String msg;											//Reads all lines sent by server
-			
-			DatagramPacket rdp;									//Packet that shall be received
-			byte buff[]=new byte[100];
-			//The msg received is in the form of bytes, so we must change to string later
-
-			
-			while(true)											//Keeps running until server stops
-			{
-				rdp=new DatagramPacket(buff,buff.length);
-				ds.receive(rdp);								//Packet received
-				msg= new String(rdp.getData(),rdp.getOffset(),rdp.getLength());
-				//Changing byte pkt into String
-			
-				System.out.println(msg);
-			}
-			
-		
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-
+          System.out.println(msg);
+      }
+  }
 }
