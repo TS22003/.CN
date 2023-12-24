@@ -92,7 +92,7 @@ proc finish { } {
     }
 $ns at 250 "finish"
 $ns run
-#create another file :CDMAlink.tcl and execute ns 6.tcl
+#create another file :CDMAlink.tcl and execute ns 6.tcl -channel (or) ns 6.tcl
 $ns at 0.1 "$n0 setdest 786 813 20"
 $ns at 0.1 "$n1 setdest 895 890 20"
 $ns at 0.1 "$n2 setdest 633 669 20"
