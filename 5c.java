@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class TCPClient{
+public class 5c{
  public static void main(String[] args) {
   try{
     Socket socket = new Socket("localhost",1300);
