@@ -1,29 +1,22 @@
 import java.util.Scanner;
-
 public class Tokenbucket {
     public static void main(String[] args) {
         int tokens = 0; 
         int rate = 10;
         int capacity;
-
         int[] request = new int[100];
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("ENTER THE BUCKET SIZE");
         capacity = scanner.nextInt();
-
         System.out.print("Enter number of requests: ");
         int n = scanner.nextInt();
-
         System.out.print("Enter no. of packets per request: ");
         for (int i = 0; i < n; i++) {
             request[i] = scanner.nextInt();
         }
-
         for (int i = 0; i < n; i++) {
             // add tokens to the bucket at a fixed rate
             tokens = Math.min(tokens + rate, capacity);
-
             /*
              * try IF U WANT U CAN ADD JUST TO SHOW PACKET MOVING TIME
              * {
@@ -34,8 +27,7 @@ public class Tokenbucket {
              * }
              */
             System.out.println("Number of packets" + request[i]);
-            if (tokens >= request[i]) {
-                // remove the requested tokens from the bucket
+            if (tokens >= request[i]) {        
                 tokens -= request[i];
                 System.out.println("Request granted, tokens remaining: " + tokens);
             } else {
